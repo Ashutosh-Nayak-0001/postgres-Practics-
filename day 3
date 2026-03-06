@@ -1,0 +1,130 @@
+select * from employees;
+
+1->SELECT *
+FROM employees
+OFFSET 3
+LIMIT 5;
+
+2->SELECT *
+FROM employees
+WHERE hire_date >= '2022-01-01';
+
+3->SELECT EXTRACT(YEAR FROM hire_date) AS hire_year,
+       COUNT(emp_id) AS employee_count
+FROM employees
+GROUP BY hire_year
+ORDER BY hire_year;
+
+4->SELECT department,
+       job_title,
+       COUNT(emp_id) AS employee_count
+FROM employees
+GROUP BY department, job_title
+ORDER BY department, job_title;
+
+5->select count(emp_id), Extract(month from hire_date) as hire_month
+from employees group by hire_month;
+
+6 -> select avg(salary) , department,job_title from employees 
+    group by department,job_title;
+
+7->SELECT department
+FROM employees
+GROUP BY department
+HAVING COUNT(DISTINCT job_title) >= 2;
+
+alter table employees add column department_id int
+alter table employees add column manager_id int
+
+8->SELECT e.first_name, d.department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id;
+9->
+select * from employees;
+select * from departments;
+select * from salaries;
+
+10->SELECT e.first_name AS employee,
+       m.first_name AS manager
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.emp_id;
+
+11-SELECT e.first_name, p.project_name
+FROM employees e
+JOIN employee_projects ep
+ON e.emp_id = ep.emp_id
+JOIN projects p
+ON ep.project_id = p.project_id;
+
+12-SELECT e.first_name
+FROM employees e
+LEFT JOIN employee_projects ep
+ON e.emp_id = ep.emp_id
+WHERE ep.project_id IS NULL;
+
+13-SELECT p.project_name
+FROM projects p
+LEFT JOIN employee_projects ep
+ON p.project_id = ep.project_id
+WHERE ep.emp_id IS NULL;
+
+14-SELECT p.project_name, COUNT(ep.emp_id) AS employee_count
+FROM projects p
+JOIN employee_projects ep
+ON p.project_id = ep.project_id
+GROUP BY p.project_name;
+
+15 - SELECT e.first_name, p.project_name, p.deadline
+FROM employees e
+JOIN employee_projects ep
+ON e.emp_id = ep.emp_id
+JOIN projects p
+ON ep.project_id = p.project_id;
+
+16 - select e.first_name ,
+      d.department_name  from employees e join 
+	  departments d on e.department_id = d.department_id
+
+	  17 - select e.first_name ,
+      d.location  from employees e join 
+	  departments d on e.department_id = d.department_id
+	  
+18 - select e.first_name ,
+      d.department_name  from employees e join 
+	  departments d on e.department_id = d.department_id 
+       where d.department_name = 'HR'
+
+19 - 	select e.first_name , d.department_name,budget
+   from employees e join departments d on e.department_id = d.department_id
+
+20 -    select e.first_name ,
+      d.location  from employees e join 
+	  departments d on e.department_id = d.department_id 
+       where d.location = 'Delhi'
+21 - select e.first_name , d.department_name,budget
+   from employees e join departments d on e.department_id = d.department_id
+   where budget > 800000;
+
+ 22 - select e.first_name , m.first_name from 
+ employees e left join employees m 
+ on m.emp_id = e.manager_id
+
+ 23- SELECT e.*
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.emp_id
+WHERE m.emp_id IS NULL;
+
+24 - select e.first_name , m.first_name from 
+ employees e left join employees m 
+ on m.emp_id = e.manager_id where m.first_name = 'John'
+25 - 
+select e.first_name , m.first_name from 
+ employees e left join employees m 
+ on m.emp_id = e.manager_id where m.hire_date > e.hire_date;
+
+ 26-select e.first_name , m.first_name,e.department from 
+ employees e left join employees m 
+ on m.emp_id = e.manager_id group by e.department
