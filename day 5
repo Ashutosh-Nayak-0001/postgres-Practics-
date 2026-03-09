@@ -1,0 +1,62 @@
+SELECT department_id, MAX(salary)
+FROM employees
+GROUP BY department_id;
+
+->A window function performs a calculation across a group of rows while keeping each row separate;
+
+SELECT department, AVG(salary)
+FROM employees
+GROUP BY department;
+
+select first_name,department,salary,
+AVG(salary) over(partition by department) as dept_avg
+from employees
+
+SELECT first_name,
+       salary,
+       ROW_NUMBER() OVER(ORDER BY salary DESC)
+FROM employees;
+
+SELECT first_name,
+       department,
+       salary,
+       ROW_NUMBER() OVER(
+           PARTITION BY department
+           ORDER BY salary DESC
+       ) AS rank
+FROM employees;
+
+SELECT first_name,
+       salary,
+       LAG(salary) OVER(ORDER BY emp_id) AS previous_salary
+FROM employees;
+
+1-select first_name,department, salary,
+ROW_NUMBER() 
+over(partition by department
+  order by salary
+) from employees
+
+2-select first_name,department, salary,
+RANK() 
+over(
+  order by salary desc
+) from employees
+
+3-select first_name,department, salary,
+DENSE_RANK() 
+over(
+  order by salary desc
+) from employees
+
+4-select * from ( select first_name,department,salary, avg(salary)
+over(
+partition by department
+) as dept_avg from employees ) where salary > dept_avg
+
+5-select * from( select first_name, department,salary
+over (partition by department 
+ 
+) from employees) where salary = max
+
+6 - 
