@@ -1,0 +1,111 @@
+--inner join (it gives only matching rows)
+
+SELECT e.name, d.dept_name
+FROM employees e
+INNER JOIN departments d
+ON e.dept_id = d.id;
+
+-- left join (all rows from left table and matching rows from right table)
+
+SELECT e.name, d.dept_name
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.id;
+
+--right join (opposite of left join)
+
+SELECT e.name, d.dept_name
+FROM employees e
+RIGHT JOIN departments d
+ON e.dept_id = d.id;
+
+--full join (return all rows from both table)
+
+SELECT e.name, d.dept_name
+FROM employees e
+FULL JOIN departments d
+ON e.dept_id = d.id;
+
+--cross join(it gives all possible combination)
+SELECT *
+FROM employees
+CROSS JOIN departments;
+
+--self join 
+SELECT e.name AS employee,
+       m.name AS manager
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.id;
+
+--Anti join
+
+Return rows from one table that DO NOT have a match in another table.
+
+PostgreSQL does not have a direct keyword ANTI JOIN, but we implement it using LEFT JOIN.
+
+Example
+
+Find employees without departments.
+
+SELECT e.first_name
+FROM employees e
+LEFT JOIN departments d
+ON e.department_id = d.department_id
+WHERE d.department_id IS NULL;
+
+--semi join
+
+Idea
+
+Return rows if a match exists, but do not duplicate rows.
+
+Usually written with EXISTS.
+
+Example
+
+Find employees who belong to a department.
+
+SELECT *
+FROM employees e
+WHERE EXISTS (
+  SELECT 1
+  FROM departments d
+  WHERE e.department_id = d.department_id
+);
+
+--self join
+Self joins are heavily used for hierarchical data.
+
+Example table:
+
+employees
+
+id	name	manager_id
+1	CEO	NULL
+2	Manager	1
+3	Developer	2
+Query
+SELECT e.name AS employee,
+       m.name AS manager
+FROM employees e
+LEFT JOIN employees m
+ON e.manager_id = m.id;
+
+
+select e.first_name,d.department_name 
+from employees e 
+join  departments d 
+on e.department_id  = d.department_id where d.department_name = 'IT'
+
+--group by (d.department_name) 
+
+---------------------------------------------------------
+
+select * from employees;
+
+select * from departments;
+
+select e.first_name,d.department_name from 
+employees e right join departments d
+on e.department_id = d.department_id
