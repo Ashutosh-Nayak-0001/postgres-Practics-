@@ -1,0 +1,190 @@
+CREATE TABLE students (
+    age SMALLINT
+);
+
+INSERT INTO students VALUES (20);
+
+CREATE TABLE employees (
+    emp_id INTEGER
+);
+
+INSERT INTO employees VALUES (1001);
+
+CREATE TABLE transactions (
+    transaction_id BIGINT
+);
+
+INSERT INTO transactions VALUES (9876543210);
+
+--DECIMAL / NUMERIC
+
+--Stores exact decimal numbers
+
+Used for financial calculations
+
+--CREATE TABLE products (
+    price NUMERIC(10,2)
+);
+
+INSERT INTO products VALUES (9999.99);
+
+----------------------------
+
+CREATE TABLE measurements (
+    temperature REAL
+);
+
+INSERT INTO measurements VALUES (36.6);
+--------------------------------------------
+
+CREATE TABLE physics_data (
+    velocity DOUBLE PRECISION
+);
+
+INSERT INTO physics_data VALUES (299792458.123);
+---------------------------------------------------
+
+| Data Type        | Description            | Example    |
+| ---------------- | ---------------------- | ---------- |
+| SMALLINT         | Small integer          | 10         |
+| INTEGER / INT    | Normal integer         | 1000       |
+| BIGINT           | Large integer          | 9876543210 |
+| NUMERIC(p,s)     | Exact decimal numbers  | 123.45     |
+| DECIMAL(p,s)     | Same as NUMERIC        | 999.99     |
+| REAL             | Single precision float | 3.14       |
+| DOUBLE PRECISION | Double precision float | 12345.678  |
+==========================================================================
+| Data Type  | Description           |
+| ---------- | --------------------- |
+| CHAR(n)    | Fixed length text     |
+| VARCHAR(n) | Variable length text  |
+| TEXT       | Unlimited length text |
+===========================================================================
+| Data Type   | Example                 |
+| ----------- | ----------------------- |
+| DATE        | 2026-03-16              |
+| TIME        | 14:30:00                |
+| TIMESTAMP   | 2026-03-16 14:30:00     |
+| TIMESTAMPTZ | Timestamp with timezone |
+| INTERVAL    | 2 days                  |
+============================================================================
+CREATE TABLE users (
+    user_id UUID
+);
+
+============================================================================
+
+CREATE TABLE logs (
+    data JSONB
+);
+=============================================================================
+CREATE TABLE students (
+    marks INT[]
+);
+
+INSERT INTO students VALUES (ARRAY[85,90,88]);
+
+==============================================================================
+
+| Type      | Use                  |
+| --------- | -------------------- |
+| SERIAL    | Auto increment       |
+| BIGSERIAL | Large auto increment |
+| MONEY     | Currency values      |
+
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    salary MONEY
+);
+
+================================================================================
+
+CREATE TABLE employees (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name TEXT
+);
+
+=================================================================================
+
+CREATE TYPE order_status AS ENUM ('pending', 'shipped', 'delivered');
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    status order_status
+);
+INSERT INTO orders VALUES (1, 'pending');
+INSERT INTO orders VALUES (2, 'processing');
+==================================================================================
+<user>
+  <name>Ashutosh</name>
+  <age>25</age>
+</user>
+
+CREATE TABLE users (
+    id SERIAL,
+    user_data XML
+);
+
+INSERT INTO users VALUES (
+1,
+'<user><name>Ashutosh</name><age>25</age></user>'
+);
+
+SELECT xpath('/user/name/text()', user_data) FROM users;
+
+===========================================================================
+
+ALTER TABLE employees
+ADD COLUMN salary NUMERIC,
+ADD COLUMN department VARCHAR(50);
+
+ALTER TABLE employees
+DROP COLUMN age;
+
+ALTER TABLE employees
+RENAME COLUMN salary TO emp_salary;
+
+ALTER TABLE employees
+ALTER COLUMN emp_salary TYPE NUMERIC(10,2);
+
+ALTER TABLE employees
+ALTER COLUMN department SET DEFAULT 'IT';
+
+ALTER TABLE employees
+ALTER COLUMN department DROP DEFAULT;
+
+ALTER TABLE employees
+ALTER COLUMN name SET NOT NULL;
+
+ALTER TABLE employees
+RENAME TO staff;
+
+ALTER TABLE employees
+ADD PRIMARY KEY (id);
+
+ALTER TABLE employees
+ADD CONSTRAINT fk_dept
+FOREIGN KEY (department_id)
+REFERENCES departments(id);
+
+ALTER TABLE employees
+DROP CONSTRAINT fk_dept;
+
+ALTER TABLE employees
+ADD CONSTRAINT unique_email UNIQUE(email);
+
+ALTER TABLE employees
+ADD CONSTRAINT salary_check
+CHECK (salary > 0);
+
+| Operation       | Query               |
+| --------------- | ------------------- |
+| Add column      | `ADD COLUMN`        |
+| Drop column     | `DROP COLUMN`       |
+| Rename column   | `RENAME COLUMN`     |
+| Change datatype | `ALTER COLUMN TYPE` |
+| Set default     | `SET DEFAULT`       |
+| Rename table    | `RENAME TO`         |
+| Add constraint  | `ADD CONSTRAINT`    |
+
+
+NUMERIC(precision, scale)
