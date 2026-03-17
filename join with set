@@ -1,0 +1,121 @@
+select * from employees;
+
+select * from departments;
+
+select * from projects;
+
+CREATE TABLE employees (
+    emp_id INT,
+    name VARCHAR(50),
+    dept_id INT
+);
+
+CREATE TABLE departments (
+    dept_id INT,
+    dept_name VARCHAR(50)
+);
+
+CREATE TABLE projects (
+    emp_id INT,
+    project_name VARCHAR(50)
+);
+
+INSERT INTO employees VALUES
+(1, 'Amit', 10),
+(2, 'Rahul', 20),
+(3, 'Sneha', 10),
+(4, 'Priya', 30),
+(5, 'Karan', NULL);
+
+INSERT INTO departments VALUES
+(10, 'IT'),
+(20, 'HR'),
+(30, 'Sales'),
+(40, 'Finance');
+
+INSERT INTO projects VALUES
+(1, 'Alpha'),
+(2, 'Beta'),
+(3, 'Alpha'),
+(6, 'Gamma');
+
+q1- select * from (
+select e.emp_id,e.name,d.dept_id,d.dept_name
+from employees e join departments d
+on e.dept_id = d.dept_id )
+where  dept_name = 'IT'
+q2-
+SELECT e.name, d.dept_name
+FROM employees e
+LEFT JOIN departments d
+ON e.dept_id = d.dept_id
+WHERE d.dept_id IS NULL;
+q3-
+SELECT e.name, d.dept_name
+FROM departments d
+LEFT JOIN employees e
+ON e.dept_id = d.dept_id
+WHERE e.name IS NULL;
+q4-
+select * from employees where emp_id in (
+select emp_id from employees
+except
+select emp_id from projects )
+
+select e.emp_id ,p.project_name
+from employees e 
+left join 
+projects p on e.emp_id = p.emp_id 
+where p.project_name is null
+q5-
+select p.emp_id ,p.project_name
+from projects p
+left join 
+employees e on e.emp_id = p.emp_id 
+where e.emp_id is null
+
+select * from projects where emp_id in (
+select emp_id from projects
+except
+select emp_id from employees )
+
+q6-
+select * from employees where emp_id in(
+select emp_id from projects
+intersect
+select emp_id from employees
+)
+
+select e.emp_id, e.name
+from projects p
+ join 
+employees e on e.emp_id = p.emp_id 
+
+q7-
+select emp_id from employees 
+union
+select emp_id from projects
+
+q-8
+-- Employees in IT
+SELECT e.emp_id, e.name
+FROM employees e
+JOIN departments d 
+ON e.dept_id = d.dept_id
+WHERE d.dept_name = 'IT'
+
+UNION
+
+-- Employees in project Alpha
+SELECT e.emp_id, e.name
+FROM employees e
+JOIN projects p 
+ON e.emp_id = p.emp_id
+WHERE p.project_name = 'Alpha';
+
+SELECT DISTINCT e.emp_id, e.name
+FROM employees e
+LEFT JOIN departments d ON e.dept_id = d.dept_id
+LEFT JOIN projects p ON e.emp_id = p.emp_id
+WHERE d.dept_name = 'IT'
+   OR p.project_name = 'Alpha';
