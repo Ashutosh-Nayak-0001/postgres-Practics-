@@ -1,0 +1,19 @@
+Query Optimization - Complete Notes
+What is Query Optimization?
+Query optimization is the process of improving the performance of a SQL query by reducing
+execution time and resource usage.
+Key Techniques
+Use indexes, avoid SELECT *, use WHERE conditions, avoid functions on indexed columns, use
+LIMIT, and prefer EXISTS over IN when appropriate.
+Example (Bad vs Good)
+Bad Query:
+SELECT * FROM employees;
+Optimized Query:
+SELECT name, salary FROM employees WHERE department = 'IT';
+Using Index
+Creating an index to improve performance:
+CREATE INDEX idx_dept ON employees(department);
+Execution Plan
+Use EXPLAIN and EXPLAIN ANALYZE to understand query performance.
+EXPLAIN SELECT * FROM employees WHERE emp_id = 101;
+EXPLAIN ANALYZE SELECT * FROM employees WHERE emp_id = 101;
