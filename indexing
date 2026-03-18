@@ -1,0 +1,34 @@
+SELECT * FROM employees WHERE emp_id = 5;
+
+CREATE INDEX idx_emp_id ON employees(emp_id);
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    name TEXT
+);
+
+CREATE UNIQUE INDEX idx_email ON employees(email);
+
+CREATE INDEX idx_name ON employees(name);
+
+CREATE INDEX idx_name_dept 
+ON employees(name, department);
+
+CREATE INDEX idx_active_emp 
+ON employees(emp_id)
+WHERE status = 'active';
+
+| Index                                     | Primary Key   |
+| ----------------------------------------- | ------------- |
+| Optional                                  | Mandatory     |
+| Can have duplicates (except unique index) | No duplicates |
+| Multiple allowed                          | Only one      |
+
+
+| Index Type | Best For       | Use Case            |
+| ---------- | -------------- | ------------------- |
+| B-Tree     | Default        | Normal queries      |
+| Hash       | `=` only       | Exact match         |
+| GIN        | JSON, Array    | Search inside data  |
+| GiST       | Range, Spatial | Overlapping queries |
+| BRIN       | Huge data      | Time-series, logs   |
