@@ -1,0 +1,48 @@
+PostgreSQL Window Functions - Complete Guide
+ROW_NUMBER()
+SELECT name, salary,
+ROW_NUMBER() OVER (ORDER BY salary DESC) AS row_num
+FROM employees;
+RANK()
+SELECT name, salary,
+RANK() OVER (ORDER BY salary DESC) AS rank
+FROM employees;
+DENSE_RANK()
+SELECT name, salary,
+DENSE_RANK() OVER (ORDER BY salary DESC) AS dense_rank
+FROM employees;
+NTILE()
+SELECT name, salary,
+NTILE(4) OVER (ORDER BY salary) AS bucket
+FROM employees;
+LAG()
+SELECT name, salary,
+LAG(salary) OVER (ORDER BY salary) AS prev_salary
+FROM employees;
+LEAD()
+SELECT name, salary,
+LEAD(salary) OVER (ORDER BY salary) AS next_salary
+FROM employees;
+FIRST_VALUE()
+SELECT name, salary,
+FIRST_VALUE(salary) OVER (ORDER BY salary DESC) AS highest_salary
+FROM employees;
+LAST_VALUE()
+SELECT name, salary,
+LAST_VALUE(salary) OVER (
+ ORDER BY salary
+ ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+) AS last_salary
+FROM employees;
+SUM() OVER (Running Total)
+SELECT name, salary,
+SUM(salary) OVER (ORDER BY emp_id) AS running_total
+FROM employees;
+AVG() OVER
+SELECT name, salary,
+AVG(salary) OVER (PARTITION BY department) AS avg_salary
+FROM employees;
+COUNT() OVER
+SELECT name, department,
+COUNT(*) OVER (PARTITION BY department) AS dept_count
+FROM employees;
