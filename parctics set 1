@@ -1,0 +1,146 @@
+q1-select * from employees;
+select * from departments;
+select * from projects;
+q2-select first_name,salary from employees;
+q3-select first_name,salary from employees where salary > 50000;
+q4-select * from employees where department_id = 10;
+q5-select * from employees where hire_date >= '01/01/2020'
+q6-select distinct department_id from employees ;
+q7-select count(emp_id) from employees;
+q8-select max(salary) from employees;
+q9-select min(salary) from employees;
+q10-select * from employees where first_name LIKE 'A%'; 
+
+q11-select e.first_name,d.department_name
+from employees e 
+join 
+departments d on e.department_id = d.department_id;
+
+q12-select count(e.emp_id),d.department_name
+from employees e 
+join 
+departments d on e.department_id = d.department_id
+group by d.department_name having department_name = 'IT';
+
+q13-select * from employees where salary between 30000 and 70000;
+
+q14-
+select * from employees where department_id is null;
+
+-------------------------------------------
+q15-
+select e.first_name , m.first_name from employees e
+self join 
+(select * from employees) m
+on e.manager_id= m.emp_id
+--------------------------------------------
+
+q16-
+select d.department_name , count(e.emp_id) emp_id from
+employees e join departments d
+on e.department_id = d.department_id 
+group by d.department_name
+having emp_id > 4
+
+q17-select * from employees where project_id is null
+
+q18-select p.project_name, e.emp_name from employees e
+ left join 
+ projects p
+ on p.emp_id = e.emp_id
+
+ q19-
+
+ q21-
+select department_id , avg(salary) from employees
+group by department_id
+
+q22-
+
+q23-
+select department_id , sum(salary) from employees
+group by department_id
+
+q24-
+select department_id , max(salary) from employees
+group by department_id
+
+q25- select  extract(year,hire_date) as hire_year from employees
+
+q26-
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+q1-select * from employees;
+select * from departments;
+select * from projects;
+q2-select first_name,salary from employees;
+q3-select first_name,salary from employees where salary > 50000;
+q4-select * from employees where department_id = 10;
+q5-select * from employees where hire_date >= '01/01/2020'
+q6-select distinct department_id from employees ;
+q7-select count(emp_id) from employees;
+q8-select max(salary) from employees;
+q9-select min(salary) from employees;
+q10-select * from employees where first_name LIKE 'A%'; 
+
+q11-select e.first_name,d.department_name
+from employees e 
+join 
+departments d on e.department_id = d.department_id;
+
+q12-select count(e.emp_id),d.department_name
+from employees e 
+join 
+departments d on e.department_id = d.department_id
+group by d.department_name having department_name = 'IT';
+
+q13-select * from employees where salary between 30000 and 70000;
+
+q14-
+select * from employees where department_id is null;
+
+-------------------------------------------
+q15-
+select e.first_name , m.first_name from employees e
+self join 
+(select * from employees) m
+on e.manager_id= m.emp_id
+--------------------------------------------
+
+q16-
+select * from (
+select d.dept_name , count(e.emp_id) emp_id from
+employees e join departments d
+on e.dept_id = d.dept_id 
+group by d.dept_name )
+where emp_id > 1
+
+q17-select * from employees where project_id is null
+
+q18-select p.project_name, e.name from employees e
+  join 
+ projects p
+ on p.emp_id = e.emp_id
+
+ q19-
+ select * from 
+ (select p.project_name, e.name from employees e
+  join 
+ projects p
+ on p.emp_id = e.emp_id ) where project_name = 'Alpha'
+q20-
+select count(emp_id),dept_id from employees 
+group by dept_id
+
+q21-
+select dept_id , avg(salary) from employees
+group by dept_id
+
+q22-select * from
+(select count(emp_id) as emp_count,dept_id from employees 
+group by dept_id)  where emp_count > 5;
+
+q23-
+select dept_id , sum(salary) from employees
+group by dept_id
