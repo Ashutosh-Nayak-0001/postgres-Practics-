@@ -1,0 +1,56 @@
+create table Teams(
+ team_name varchar(100)
+)
+
+insert into teams values 
+('india'),
+('pakistan'),
+('Australia'),
+('Afganistan')
+
+select * from teams
+
+//Row Number
+WITH CTE AS (
+select team_name ,
+ROW_NUMBER() OVER(ORDER BY TEAM_NAME) 
+from teams
+)
+SELECT * FROM CTE T1 
+JOIN CTE T2
+ON T1.ROW_NUMBER < T2.ROW_NUMBER
+
+CREATE TABLE CLASS 
+(
+ID INTEGER,
+NAME VARCHAR(100),
+DEPT VARCHAR(100),
+MARK INT
+)
+
+CREATE TABLE CLASS
+(
+    ID      INTEGER,
+    NAME    VARCHAR(100),
+    DEPT    VARCHAR(100),
+    MARK    INT
+);
+TRUNCATE TABLE CLASS
+
+INSERT INTO CLASS (ID, NAME, DEPT, MARK) VALUES
+(1,  'Aarav Sharma',    'Computer Science', 85),
+(2,  'Priya Reddy',     'Mathematics',      92),
+(3,  'Rahul Verma',     'Physics',          78),
+(4,  'Sneha Iyer',      'Computer Science', 85),
+(5,  'Kiran Mehta',     'Chemistry',        74),
+(6,  'Divya Nair',      'Mathematics',      95),
+(7,  'Arjun Patel',     'Physics',          81),
+(8,  'Pooja Gupta',     'Chemistry',        69),
+(9,  'Vikram Singh',    'Computer Science', 90),
+(10, 'Ananya Krishnan', 'Mathematics',      83);
+
+SELECT *,
+--RANK() OVER(PARTITION BY DEPT ORDER BY MARK ASC) AS RANK,
+DENSE_RANK() OVER(PARTITION BY DEPT ORDER BY MARK ) AS D_RANK
+FROM CLASS
+
